@@ -4,9 +4,8 @@ import List from './components/List';
 import Loading from './components/ui/Loading';
 import Search from './components/Search';
 import type { AppState } from './dto/types';
+import { PAGE_LIMIT } from './dto/constants';
 import { getAstronomicalObject } from './api/api';
-
-const PAGE_LIMIT = 10;
 
 export default class extends Component {
   public state: AppState;
