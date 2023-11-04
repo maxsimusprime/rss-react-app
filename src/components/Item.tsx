@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import type { AstronomicalObject } from '../dto/types';
+import type { AstronomicalObject, AstronomicalObjectType } from '../dto/types';
 
 export default class extends Component<AstronomicalObject, object> {
   constructor(props: AstronomicalObject) {
@@ -10,7 +10,7 @@ export default class extends Component<AstronomicalObject, object> {
   render() {
     const { name, astronomicalObjectType } = this.props;
 
-    const imageSrc = (type: string): string => {
+    const imageSrc = (type: AstronomicalObjectType): string => {
       switch (type) {
         case 'COMET':
           return '/assets/images/comet.png';

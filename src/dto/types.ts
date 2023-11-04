@@ -1,7 +1,7 @@
 type AstronomicalObject = {
   uid: string;
   name: string;
-  astronomicalObjectType: string;
+  astronomicalObjectType: AstronomicalObjectType;
   location: {
     uid: string;
     name: string;
@@ -22,4 +22,6 @@ type SearchProps = {
   updateItems: () => void;
 };
 
-export type { AstronomicalObject, AppState, SearchProps };
+type AstronomicalObjectType = 'COMET' | 'GALAXY' | 'NEBULA' | 'PLANET' | 'REGION' | 'SECTOR' | 'STAR_SYSTEM';
+
+export type { AstronomicalObject, AppState, SearchProps, AstronomicalObjectType };
