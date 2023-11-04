@@ -9,19 +9,26 @@ type AstronomicalObject = {
 };
 
 type AppState = {
-  items: AstronomicalObject[];
-  offset: number;
-  limit: number;
   isLoading: boolean;
-  searchQuery: string;
 };
 
 type SearchProps = {
-  searchQuery: string;
-  setAppState: (state: Partial<AppState>) => void;
-  updateItems: () => void;
+  query: string;
+  setQuery: (query: string) => void;
 };
 
-type AstronomicalObjectType = 'COMET' | 'GALAXY' | 'NEBULA' | 'PLANET' | 'REGION' | 'SECTOR' | 'STAR_SYSTEM';
+type AstronomicalObjectType =
+  | 'COMET'
+  | 'GALAXY'
+  | 'NEBULA'
+  | 'PLANET'
+  | 'REGION'
+  | 'SECTOR'
+  | 'STAR_SYSTEM';
 
-export type { AstronomicalObject, AppState, SearchProps, AstronomicalObjectType };
+export type {
+  AstronomicalObject,
+  AppState,
+  SearchProps,
+  AstronomicalObjectType,
+};

@@ -1,72 +1,57 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import './styles/App.css';
-import List from './components/List';
-import Loading from './components/ui/Loading';
-import Search from './components/Search';
-import type { AppState } from './dto/types';
+import List from './components/List/List';
+import Loading from './components/_ui/bars/Loading/Loading';
+import Search from './components/Search/Search';
+import type { AstronomicalObject, AppState } from './dto/types';
 import { PAGE_LIMIT } from './dto/constants';
 import { getAstronomicalObject } from './api/api';
 
-export default class extends Component {
-  public state: AppState;
+export default function App() {
+  const [appState, setAppState] = useState<AppState>({
+    isLoading: true,
+  });
 
-  constructor(props: object) {
-    super(props);
-    this.state = {
-      items: [],
-      offset: 0,
-      limit: PAGE_LIMIT,
-      isLoading: true,
-      searchQuery: localStorage.getItem('searchQuery') || '',
+  const [items, setItems] = useState<AstronomicalObject[]>([]);
+  const [query, setQuery] = useState<string>(
+    localStorage.getItem('searchQuery') || ''
+  );
+  const [offset] = useState<number>(0);
+
+  useEffect(() => {
+    const updateItems = async (): Promise<void> => {
+      setAppState({ isLoading: true });
+      const items = await getAstronomicalObject({
+        limit: PAGE_LIMIT,
+        offset,
+        searchQuery: query,
+      });
+      setAppState({ isLoading: false });
+      setItems(items);
     };
-  }
+    setAppState({ isLoading: true });
+    updateItems();
+  }, [offset, query]);
 
-  render() {
-    return (
-      <>
-        <header
-          style={{ display: 'flex', justifyContent: 'center' }}
-          className="header"
+  return (
+    <>
+      <header
+        style={{ display: 'flex', justifyContent: 'center' }}
+        className="header"
+      >
+        <Search query={query} setQuery={setQuery} />
+        <button
+          onClick={() => {
+            throw new Error('Error button handle');
+          }}
         >
-          <Search
-            searchQuery={this.state.searchQuery}
-            setAppState={(state: Partial<AppState>): void =>
-              this.setState(state)
-            }
-            updateItems={() => this.updateItems()}
-          />
-          <button
-            onClick={() => {
-              throw new Error('Error button handle');
-            }}
-          >
-            Error
-          </button>
-        </header>
-        <hr />
-        <main className="main">
-          {this.state.isLoading ? (
-            <Loading />
-          ) : (
-            <List items={this.state.items} />
-          )}
-        </main>
-      </>
-    );
-  }
-
-  async updateItems(): Promise<void> {
-    const { offset, searchQuery } = this.state;
-    this.setState({ isLoading: true });
-    const items = await getAstronomicalObject({
-      limit: PAGE_LIMIT,
-      offset,
-      searchQuery,
-    });
-    this.setState({ items, isLoading: false });
-  }
-
-  async componentDidMount(): Promise<void> {
-    await this.updateItems();
-  }
+          Error
+        </button>
+      </header>
+      <hr />
+      <main className="main">
+        {appState.isLoading ? <Loading /> : <List items={items} />}
+      </main>
+    </>
+  );
 }
