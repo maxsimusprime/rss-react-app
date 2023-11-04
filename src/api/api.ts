@@ -1,13 +1,14 @@
 import type { AstronomicalObject } from '../dto/types';
+import { BASE_URI } from '../dto/constants';
 
 const getAstronomicalObject = async (params: {
   searchQuery?: string;
   offset?: number;
   limit: number;
 }): Promise<AstronomicalObject[] | []> => {
-  const url = `https://stapi.co/api/v2/rest/astronomicalObject/search?pageNumber=${
-    params.offset || 0
-  }&pageSize=${params.limit}`;
+  const url = `${BASE_URI}search?pageNumber=${params.offset || 0}&pageSize=${
+    params.limit
+  }`;
   const postData = {
     method: 'POST',
     headers: {
