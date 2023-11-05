@@ -12,9 +12,6 @@
   width: 200px;
   overflow: hidden;
 }
-.item__image {
-  width: 100%;
-}
 
 .item__title {
   color: rgb(76, 10, 10);
