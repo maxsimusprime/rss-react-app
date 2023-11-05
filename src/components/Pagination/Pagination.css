@@ -1,0 +1,18 @@
+.pagination {
+  display: flex;
+  column-gap: 15px;
+  align-items: center;
+  font-size: 18px;
+  padding-top: 15px;
+}
+
+.control {
+  text-decoration: none;
+  font-size: 24px;
+}
+
+.current {
+  border: 1px solid gray;
+  border-radius: 3px;
+  padding: 1px 5px;
+}
