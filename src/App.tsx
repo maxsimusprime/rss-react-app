@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import './styles/App.css';
+import './App.css';
 import List from './components/List/List';
 import Loading from './components/_ui/bars/Loading/Loading';
 import Search from './components/Search/Search';
-import type { AstronomicalObject, AppState } from './dto/types';
+import type { AstronomicalObject, AppState, Page } from './dto/types';
 import { PAGE_LIMIT } from './dto/constants';
-import { getAstronomicalObject } from './api/api';
+import { getAstronomicalObjectBaseResponse } from './api/api';
+import { Outlet, useSearchParams } from 'react-router-dom';
 
 export default function App() {
   const [appState, setAppState] = useState<AppState>({
@@ -18,20 +19,33 @@ export default function App() {
   );
   const [offset] = useState<number>(0);
 
+  const [page, setPage] = useState<Page>();
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
   useEffect(() => {
+    const offset = searchParams.get('page')
+      ? Number(searchParams.get('page'))
+      : 0;
+
     const updateItems = async (): Promise<void> => {
       setAppState({ isLoading: true });
-      const items = await getAstronomicalObject({
+      const response = await getAstronomicalObjectBaseResponse({
         limit: PAGE_LIMIT,
         offset,
         searchQuery: query,
       });
+
+      if (!('error' in response)) {
+        const { astronomicalObjects, page } = response;
+        setItems(astronomicalObjects);
+        setPage(page);
+      }
       setAppState({ isLoading: false });
-      setItems(items);
     };
     setAppState({ isLoading: true });
     updateItems();
-  }, [offset, query]);
+  }, [offset, query, searchParams]);
 
   return (
     <>
@@ -39,7 +53,11 @@ export default function App() {
         style={{ display: 'flex', justifyContent: 'center' }}
         className="header"
       >
-        <Search query={query} setQuery={setQuery} />
+        <Search
+          query={query}
+          setQuery={setQuery}
+          setSearchParams={setSearchParams}
+        />
         <button
           onClick={() => {
             throw new Error('Error button handle');
@@ -50,7 +68,8 @@ export default function App() {
       </header>
       <hr />
       <main className="main">
-        {appState.isLoading ? <Loading /> : <List items={items} />}
+        {appState.isLoading ? <Loading /> : <List items={items} page={page} />}
+        {searchParams.has('details') && <Outlet />}
       </main>
     </>
   );
