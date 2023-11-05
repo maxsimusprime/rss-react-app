@@ -1,11 +1,15 @@
-import type { AstronomicalObject } from '../dto/types';
+import type {
+  AstronomicalObjectBaseResponse,
+  AstronomicalObject,
+  ResponseError,
+} from '../dto/types';
 import { BASE_URI } from '../dto/constants';
 
-const getAstronomicalObject = async (params: {
+const getAstronomicalObjectBaseResponse = async (params: {
   searchQuery?: string;
   offset?: number;
   limit: number;
-}): Promise<AstronomicalObject[] | []> => {
+}): Promise<AstronomicalObjectBaseResponse | ResponseError> => {
   const url = `${BASE_URI}search?pageNumber=${params.offset || 0}&pageSize=${
     params.limit
   }`;
@@ -19,13 +23,33 @@ const getAstronomicalObject = async (params: {
 
   try {
     const response = await fetch(url, postData);
-    const resObj = await response.json();
-    const items = resObj.astronomicalObjects as AstronomicalObject[];
-    return items;
+    if (response.ok) {
+      return (await response.json()) as AstronomicalObjectBaseResponse;
+    }
+    return { error: `Response error: ${response.statusText}` };
   } catch (error) {
     console.log(error);
-    return [];
+    return { error: 'Network error' };
   }
 };
 
-export { getAstronomicalObject };
+const getAstronomicalObjectById = async (params: {
+  uid: string;
+}): Promise<AstronomicalObject | ResponseError> => {
+  const { uid } = params;
+  const url = `${BASE_URI}?uid=${uid}`;
+
+  try {
+    const response = await fetch(url);
+    if (response.ok) {
+      const obj = await response.json();
+      return obj.astronomicalObject as AstronomicalObject;
+    }
+    return { error: `Response error: ${response.statusText}` };
+  } catch (error) {
+    console.log(error);
+    return { error: 'Network error' };
+  }
+};
+
+export { getAstronomicalObjectBaseResponse, getAstronomicalObjectById };
