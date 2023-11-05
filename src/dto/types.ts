@@ -8,6 +8,26 @@ type AstronomicalObject = {
   };
 };
 
+type Page = {
+  pageNumber: number;
+  pageSize: number;
+  numberOfElements: number;
+  totalElements: number;
+  totalPages: number;
+  firstPage: boolean;
+  lastPage: boolean;
+};
+
+type AstronomicalObjectBaseResponse = {
+  page: Page;
+  sort: { clauses: string[] };
+  astronomicalObjects: AstronomicalObject[];
+};
+
+type ResponseError = {
+  error: string;
+};
+
 type AppState = {
   isLoading: boolean;
 };
@@ -15,6 +35,7 @@ type AppState = {
 type SearchProps = {
   query: string;
   setQuery: (query: string) => void;
+  setSearchParams: (params: URLSearchParams) => void;
 };
 
 type AstronomicalObjectType =
@@ -29,6 +50,9 @@ type AstronomicalObjectType =
 export type {
   AstronomicalObject,
   AppState,
-  SearchProps,
   AstronomicalObjectType,
+  AstronomicalObjectBaseResponse,
+  Page,
+  ResponseError,
+  SearchProps,
 };
