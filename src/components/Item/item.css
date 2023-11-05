@@ -1,0 +1,22 @@
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 220px;
+  border: 1px solid gray;
+  border-radius: 7px;
+  padding: 10px 0;
+}
+
+.item-logo {
+  width: 200px;
+  overflow: hidden;
+}
+
+.item__title {
+  color: rgb(76, 10, 10);
+}
+
+.item__desc {
+  color: rgb(5, 5, 34);
+}
