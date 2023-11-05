@@ -2,7 +2,11 @@ import { ChangeEvent, useRef, useState } from 'react';
 import type { SearchProps } from '../../dto/types';
 import './search.css';
 
-export default function Search({ query, setQuery }: SearchProps) {
+export default function Search({
+  query,
+  setQuery,
+  setSearchParams,
+}: SearchProps) {
   const [inputValue, setInputValue] = useState<string>(query);
 
   const ref = useRef<HTMLInputElement | null>(null);
@@ -10,6 +14,7 @@ export default function Search({ query, setQuery }: SearchProps) {
   const searchButtonHandle = async (): Promise<void> => {
     localStorage.setItem('searchQuery', inputValue);
     setQuery(inputValue.trim());
+    setSearchParams(new URLSearchParams({ page: '0' }));
   };
 
   const changeInputHandle = (e: ChangeEvent): void => {
