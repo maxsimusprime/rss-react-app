@@ -3,6 +3,7 @@ import './App.css';
 import List from './components/List/List';
 import Loading from './components/_ui/bars/Loading/Loading';
 import Search from './components/Search/Search';
+import SearchLimit from './components/Search/SearchLimit';
 import type { AstronomicalObject, AppState, Page } from './dto/types';
 import { PAGE_LIMIT } from './dto/constants';
 import { getAstronomicalObjectBaseResponse } from './api/api';
@@ -19,6 +20,8 @@ export default function App() {
   );
   const [pageNumber, setPageNumber] = useState<number>(0);
 
+  const [pageLimit, setPageLimit] = useState<number>(PAGE_LIMIT);
+
   const [page, setPage] = useState<Page>();
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -33,7 +36,7 @@ export default function App() {
   useEffect(() => {
     setAppState({ isLoading: true });
     getAstronomicalObjectBaseResponse({
-      limit: PAGE_LIMIT,
+      limit: pageLimit,
       offset: pageNumber,
       searchQuery: query,
     })
@@ -47,7 +50,7 @@ export default function App() {
       .finally(() => {
         setAppState({ isLoading: false });
       });
-  }, [pageNumber, query]);
+  }, [pageLimit, pageNumber, query]);
 
   return (
     <>
@@ -67,6 +70,7 @@ export default function App() {
         >
           Error
         </button>
+        <SearchLimit setPageLimit={ setPageLimit }/>
       </header>
       <hr />
       <main className="main">
