@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { NavLink, useLocation, useSearchParams } from 'react-router-dom';
 import { getAstronomicalObjectById } from '../../api/api';
 import { useEffect, useState } from 'react';
 import { AstronomicalObject } from '../../dto/types';
@@ -12,6 +12,10 @@ export default function Details() {
 
   const [searchParams] = useSearchParams();
   const uid = searchParams.get('details') || '';
+
+  const location = useLocation();
+  const closeLink = new URLSearchParams(location.search);
+  if (closeLink.has('details')) closeLink.delete('details');
 
   useEffect(() => {
     setLoadingState({ loading: true });
@@ -43,6 +47,7 @@ export default function Details() {
             <div>Location: {details?.location?.name}</div>
           )}
           {details?.uid && <div>ID: {details?.uid}</div>}
+          <NavLink to={`?${closeLink.toString()}`}>Close</NavLink>
         </div>
       )}
     </div>
