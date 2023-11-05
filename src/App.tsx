@@ -17,35 +17,37 @@ export default function App() {
   const [query, setQuery] = useState<string>(
     localStorage.getItem('searchQuery') || ''
   );
-  const [offset] = useState<number>(0);
+  const [pageNumber, setPageNumber] = useState<number>(0);
 
   const [page, setPage] = useState<Page>();
 
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    const offset = searchParams.get('page')
+    const paramPageNumber = searchParams.has('page')
       ? Number(searchParams.get('page'))
       : 0;
+    if (pageNumber !== paramPageNumber) setPageNumber(paramPageNumber);
+  }, [pageNumber, searchParams]);
 
-    const updateItems = async (): Promise<void> => {
-      setAppState({ isLoading: true });
-      const response = await getAstronomicalObjectBaseResponse({
-        limit: PAGE_LIMIT,
-        offset,
-        searchQuery: query,
-      });
-
-      if (!('error' in response)) {
-        const { astronomicalObjects, page } = response;
-        setItems(astronomicalObjects);
-        setPage(page);
-      }
-      setAppState({ isLoading: false });
-    };
+  useEffect(() => {
     setAppState({ isLoading: true });
-    updateItems();
-  }, [offset, query, searchParams]);
+    getAstronomicalObjectBaseResponse({
+      limit: PAGE_LIMIT,
+      offset: pageNumber,
+      searchQuery: query,
+    })
+      .then((res) => {
+        if (!('error' in res)) {
+          const { astronomicalObjects, page } = res;
+          setItems(astronomicalObjects);
+          setPage(page);
+        }
+      })
+      .finally(() => {
+        setAppState({ isLoading: false });
+      });
+  }, [pageNumber, query]);
 
   return (
     <>
