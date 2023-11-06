@@ -70,7 +70,7 @@ export default function App() {
         >
           Error
         </button>
-        <SearchLimit setPageLimit={ setPageLimit }/>
+        <SearchLimit setPageLimit={ setPageLimit } setSearchParams={ setSearchParams }/>
       </header>
       <hr />
       <main className="main">
