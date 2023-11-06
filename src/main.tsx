@@ -7,13 +7,17 @@ import {
   createRoutesFromElements,
 } from 'react-router-dom';
 import App from './App.tsx';
-import Details from './components/Details/Details.tsx';
+import Details, { detailsLoader } from './components/Details/Details.tsx';
 import ErrorBoundary from './ErrorBoundary.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
-      <Route path="/" element={<Details />} />
+      <Route
+        index
+        element={<Details />}
+        loader={ detailsLoader }
+      />
     </Route>
   )
 );
