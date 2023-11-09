@@ -11,7 +11,6 @@ import { Outlet, useSearchParams } from 'react-router-dom';
 import { AppContext } from './AppContext';
 
 export default function App() {
-  
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [items, setItems] = useState<AstronomicalObject[]>([]);
@@ -19,13 +18,16 @@ export default function App() {
   const [query, setQuery] = useState<string>(
     localStorage.getItem('searchQuery') || ''
   );
-  const [pageNumber, setPageNumber] = useState<number>(0);
 
   const [pageLimit, setPageLimit] = useState<number>(PAGE_LIMIT);
 
   const [page, setPage] = useState<Page>();
 
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const [pageNumber, setPageNumber] = useState<number>(
+    Number(searchParams.get('page')) || 0
+  );
 
   useEffect(() => {
     const paramPageNumber = searchParams.has('page')
@@ -54,12 +56,12 @@ export default function App() {
   }, [pageLimit, pageNumber, query]);
 
   return (
-    <AppContext.Provider value={{ query, setQuery }}>
+    <AppContext.Provider value={{ query, setQuery, items, page }}>
       <header
         style={{ display: 'flex', justifyContent: 'center' }}
         className="header"
       >
-        <Search setSearchParams={setSearchParams}/>
+        <Search setSearchParams={setSearchParams} />
         <button
           onClick={() => {
             throw new Error('Error button handle');
@@ -67,11 +69,14 @@ export default function App() {
         >
           Error
         </button>
-        <SearchLimit setPageLimit={ setPageLimit } setSearchParams={ setSearchParams }/>
+        <SearchLimit
+          setPageLimit={setPageLimit}
+          setSearchParams={setSearchParams}
+        />
       </header>
       <hr />
       <main className="main">
-        {isLoading ? <Loading /> : <List items={items} page={page} />}
+        {isLoading ? <Loading /> : <List />}
         {searchParams.has('details') && <Outlet />}
       </main>
     </AppContext.Provider>

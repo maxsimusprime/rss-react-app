@@ -55,4 +55,6 @@ export type {
 export type ContextInitialState = {
   query: string;
   setQuery: Dispatch<SetStateAction<string>>;
+  items: AstronomicalObject[];
+  page: Page;
 };

@@ -1,15 +1,12 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import type { AstronomicalObject, Page } from '../../dto/types';
 import Item from '../Item/Item';
 import Pagination from '../Pagination/Pagination';
 import styles from './list.module.css';
-import type { MouseEvent } from 'react';
+import { useContext, type MouseEvent } from 'react';
+import { AppContext } from '../../AppContext';
 
-export default function List(props: {
-  items: AstronomicalObject[];
-  page: Page | undefined;
-}) {
-  const { items, page } = props;
+export default function List() {
+  const { items, page } = useContext(AppContext);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -27,11 +24,11 @@ export default function List(props: {
 
   return (
     <div className={styles.wrapper} onClick={(e) => listClickHandle(e)}>
-      {page && page.totalElements > 0 && <Pagination page={page} />}
+      {page && page.totalElements > 0 && <Pagination />}
       <div className={styles.list}>
-        {items.length <= 0
+        {items && items.length <= 0
           ? 'Items Not Found'
-          : items.map((item) => <Item {...item} key={item.uid} />)}
+          : items?.map((item) => <Item {...item} key={item.uid} />)}
       </div>
     </div>
   );
