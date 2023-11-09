@@ -3,9 +3,7 @@ import type { SearchProps } from '../../dto/types';
 import './search.css';
 import { AppContext } from '../../AppContext';
 
-export default function Search({
-  setSearchParams,
-}: SearchProps) {
+export default function Search({ setSearchParams }: SearchProps) {
   const { query, setQuery } = useContext(AppContext);
 
   const [inputValue, setInputValue] = useState<string>(query || '');

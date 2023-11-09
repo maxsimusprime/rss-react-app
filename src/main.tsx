@@ -13,11 +13,7 @@ import ErrorBoundary from './ErrorBoundary.tsx';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
-      <Route
-        index
-        element={<Details />}
-        loader={ detailsLoader }
-      />
+      <Route index element={<Details />} loader={detailsLoader} />
     </Route>
   )
 );

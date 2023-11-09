@@ -5,11 +5,10 @@ export default function SearchLimit({
   setPageLimit: (pageLimit: number) => void;
   setSearchParams: (params: URLSearchParams) => void;
 }) {
-
   const setLimitHandle = (limit: number): void => {
     setSearchParams(new URLSearchParams({ page: '0' }));
     setPageLimit(limit);
-  }
+  };
 
   return (
     <div style={{ display: 'flex', columnGap: '10px' }}>
