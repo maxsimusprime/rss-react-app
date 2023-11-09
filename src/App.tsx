@@ -9,6 +9,7 @@ import { PAGE_LIMIT } from './dto/constants';
 import { getAstronomicalObjectBaseResponse } from './api/api';
 import { Outlet, useSearchParams } from 'react-router-dom';
 import { AppContext } from './AppContext';
+import ErrorButton from './components/ErrorButton/ErrorButton';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -57,18 +58,9 @@ export default function App() {
 
   return (
     <AppContext.Provider value={{ query, setQuery, items, page }}>
-      <header
-        style={{ display: 'flex', justifyContent: 'center' }}
-        className="header"
-      >
+      <header className="header">
         <Search setSearchParams={setSearchParams} />
-        <button
-          onClick={() => {
-            throw new Error('Error button handle');
-          }}
-        >
-          Error
-        </button>
+        <ErrorButton/>
         <SearchLimit
           setPageLimit={setPageLimit}
           setSearchParams={setSearchParams}
