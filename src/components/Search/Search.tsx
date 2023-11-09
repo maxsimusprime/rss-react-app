@@ -1,26 +1,24 @@
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 import type { SearchProps } from '../../dto/types';
 import './search.css';
+import { AppContext } from '../../AppContext';
 
 export default function Search({
-  query,
-  setQuery,
   setSearchParams,
 }: SearchProps) {
-  const [inputValue, setInputValue] = useState<string>(query);
+  const { query, setQuery } = useContext(AppContext);
 
-  const ref = useRef<HTMLInputElement | null>(null);
+  const [inputValue, setInputValue] = useState<string>(query || '');
 
   const searchButtonHandle = async (): Promise<void> => {
     localStorage.setItem('searchQuery', inputValue);
-    setQuery(inputValue.trim());
+    if (setQuery) setQuery(inputValue.trim());
     setSearchParams(new URLSearchParams({ page: '0' }));
   };
 
-  const changeInputHandle = (e: ChangeEvent): void => {
+  const changeInputHandle = (e: ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
-    const input = e.target as HTMLInputElement;
-    setInputValue(input.value.trim());
+    setInputValue(e.target.value.trim());
   };
 
   return (
@@ -28,7 +26,6 @@ export default function Search({
       <input
         type="search"
         value={inputValue}
-        ref={ref}
         onChange={(e) => changeInputHandle(e)}
       />
       <button onClick={() => searchButtonHandle()}>Search</button>

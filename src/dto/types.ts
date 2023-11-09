@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react';
+
 type AstronomicalObject = {
   uid: string;
   name: string;
@@ -28,13 +30,7 @@ type ResponseError = {
   error: string;
 };
 
-type AppState = {
-  isLoading: boolean;
-};
-
 type SearchProps = {
-  query: string;
-  setQuery: (query: string) => void;
   setSearchParams: (params: URLSearchParams) => void;
 };
 
@@ -49,10 +45,14 @@ type AstronomicalObjectType =
 
 export type {
   AstronomicalObject,
-  AppState,
   AstronomicalObjectType,
   AstronomicalObjectBaseResponse,
   Page,
   ResponseError,
   SearchProps,
+};
+
+export type ContextInitialState = {
+  query: string;
+  setQuery: Dispatch<SetStateAction<string>>;
 };
