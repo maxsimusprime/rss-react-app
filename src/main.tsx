@@ -9,12 +9,16 @@ import {
 import App from './App.tsx';
 import Details, { detailsLoader } from './components/Details/Details.tsx';
 import ErrorBoundary from './ErrorBoundary.tsx';
+import NotFound from './components/NotFound/NotFound.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<App />}>
-      <Route index element={<Details />} loader={detailsLoader} />
-    </Route>
+    <>    
+      <Route path="/" element={<App />}>
+        <Route index element={<Details />} loader={detailsLoader} />
+      </Route>,
+      <Route path="*" element={<NotFound />} />
+    </>
   )
 );
 
