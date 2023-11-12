@@ -11,8 +11,7 @@
     "format:fix": "prettier . --write",
     "preview": "vite preview",
     "deploy": "npm run build && npx gh-pages -d dist -e rss-react-app",
-    "test": "vitest",
-    "test:coverage": "vitest --coverage"
+    "test": "vitest --coverage"
   },
   "dependencies": {
     "react": "^18.2.0",
