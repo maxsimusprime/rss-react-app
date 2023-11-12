@@ -20,7 +20,7 @@ vi.mock('react-router-dom', async (importOriginal) => {
 });
 
 describe('Details component', async () => {
-  it('renders <Loading/> when data fetching', () => {
+  it('loading indicator is displayed while fetching data', () => {
     mockedUseNavigation.mockReturnValue({ state: 'loading' });
     render(
       <MemoryRouter initialEntries={[ '/?page=3&details=ASMA0000288988' ]}>
@@ -30,7 +30,7 @@ describe('Details component', async () => {
     expect(screen.getByRole('img')).toHaveAttribute('src', '/assets/images/spinner.gif');
   });
 
-  it('renders correctly', () => {
+  it('correctly displays the detailed card data', () => {
     mockedUseNavigation.mockReturnValue({ state: 'idle' });
     render(
       <MemoryRouter initialEntries={[ '/?page=3&details=ASMA0000288988' ]}>
