@@ -1,7 +1,7 @@
 import { AstronomicalObjectType } from '../../dto/types';
 import styles from './Image.module.css';
 
-const imageSrc = (type: AstronomicalObjectType): string => {
+export const imageSrc = (type: AstronomicalObjectType): string => {
   switch (type) {
     case 'COMET':
       return '/assets/images/comet.png';
