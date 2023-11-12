@@ -7,7 +7,7 @@ type AstronomicalObject = {
   location: {
     uid: string;
     name: string;
-  };
+  } | null;
 };
 
 type Page = {
