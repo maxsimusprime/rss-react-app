@@ -46,16 +46,12 @@ describe('detailsLoader', async () => {
   it('returns correct data', async () => {
     const request = new Request('http://localhost:5173/?details=ASMA0000288988');
     const response = await detailsLoader({ request });
-    console.log(response);
-    console.log(astronomicalObject);
     expect(response).toHaveProperty('uid');
   });
 
   it('returns null wen incorrect data', async () => {
     const request = new Request('http://localhost:5173/');
     const response = await detailsLoader({ request });
-    console.log(response);
-    console.log(astronomicalObject);
     expect(response).toBe(null);
   });
 });

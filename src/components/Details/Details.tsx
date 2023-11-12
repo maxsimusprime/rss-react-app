@@ -36,6 +36,9 @@ export default function Details() {
             />
           )}
           {astronomicalObject?.name && (
+            <div>Details:</div>
+          )}
+          {astronomicalObject?.name && (
             <div>Name: {astronomicalObject?.name}</div>
           )}
           {astronomicalObject?.astronomicalObjectType && (
