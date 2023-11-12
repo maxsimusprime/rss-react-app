@@ -19,10 +19,16 @@ describe('Item component', () => {
   it('renders the relevant card data', async () => {
     render(
       <MemoryRouter>
-        <Item { ...astronomicalObject } />
+        <Item {...astronomicalObject} />
       </MemoryRouter>
     );
-    expect(screen.getByRole('link')).toHaveAttribute('href', '/?page=1&details=ASMA0000288988');
-    expect(screen.getByRole('img')).toHaveAttribute('src', '/assets/images/star-system.png');
+    expect(screen.getByRole('link')).toHaveAttribute(
+      'href',
+      '/?page=1&details=ASMA0000288988'
+    );
+    expect(screen.getByRole('img')).toHaveAttribute(
+      'src',
+      '/assets/images/star-system.png'
+    );
   });
 });

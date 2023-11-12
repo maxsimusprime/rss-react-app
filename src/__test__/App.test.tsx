@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { describe, it } from 'vitest';
-import App from '../App';
 import { MemoryRouter } from 'react-router-dom';
 import NotFound from '../components/NotFound/NotFound';
 

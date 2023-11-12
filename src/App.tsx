@@ -60,7 +60,7 @@ export default function App() {
     <AppContext.Provider value={{ query, setQuery, items, page }}>
       <header className="header">
         <Search setSearchParams={setSearchParams} />
-        <ErrorButton/>
+        <ErrorButton />
         <SearchLimit
           setPageLimit={setPageLimit}
           setSearchParams={setSearchParams}

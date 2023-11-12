@@ -17,10 +17,7 @@ export const handlers = [
     }
   ),
 
-  http.post(
-    'https://stapi.co/api/v2/rest/astronomicalObject/search',
-    () => {
-      return HttpResponse.json({ astronomicalObjectBaseResponse });
-    }
-  ),
+  http.post('https://stapi.co/api/v2/rest/astronomicalObject/search', () => {
+    return HttpResponse.json({ astronomicalObjectBaseResponse });
+  }),
 ];

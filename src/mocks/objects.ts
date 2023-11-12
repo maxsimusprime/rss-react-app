@@ -1,4 +1,7 @@
-import { AstronomicalObject, AstronomicalObjectBaseResponse } from '../dto/types';
+import {
+  AstronomicalObject,
+  AstronomicalObjectBaseResponse,
+} from '../dto/types';
 
 export const astronomicalObject: AstronomicalObject = {
   uid: 'ASMA0000288988',
@@ -111,6 +114,6 @@ export const astronomicalObjectBaseResponse: AstronomicalObjectBaseResponse = {
   astronomicalObjects,
   page,
   sort: {
-    clauses: []
+    clauses: [],
   },
 };

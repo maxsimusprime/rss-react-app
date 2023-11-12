@@ -7,7 +7,7 @@ import astronomicalObject from '../../../mocks/astronomicalObject';
 import { detailsLoader } from '../Details';
 
 const { mockedUseNavigation } = vi.hoisted(() => {
-  return { mockedUseNavigation: vi.fn() }
+  return { mockedUseNavigation: vi.fn() };
 });
 
 vi.mock('react-router-dom', async (importOriginal) => {
@@ -23,28 +23,39 @@ describe('Details component', async () => {
   it('loading indicator is displayed while fetching data', () => {
     mockedUseNavigation.mockReturnValue({ state: 'loading' });
     render(
-      <MemoryRouter initialEntries={[ '/?page=3&details=ASMA0000288988' ]}>
+      <MemoryRouter initialEntries={['/?page=3&details=ASMA0000288988']}>
         <Details />
       </MemoryRouter>
     );
-    expect(screen.getByRole('img')).toHaveAttribute('src', '/assets/images/spinner.gif');
+    expect(screen.getByRole('img')).toHaveAttribute(
+      'src',
+      '/assets/images/spinner.gif'
+    );
   });
 
   it('correctly displays the detailed card data', () => {
     mockedUseNavigation.mockReturnValue({ state: 'idle' });
     render(
-      <MemoryRouter initialEntries={[ '/?page=3&details=ASMA0000288988' ]}>
+      <MemoryRouter initialEntries={['/?page=3&details=ASMA0000288988']}>
         <Details />
       </MemoryRouter>
     );
-    expect(screen.getByRole('img')).toHaveAttribute('src', '/assets/images/star-system.png');
-    expect(screen.getByRole('link', { name: 'Close'})).toHaveAttribute('href', '/?page=3');  
+    expect(screen.getByRole('img')).toHaveAttribute(
+      'src',
+      '/assets/images/star-system.png'
+    );
+    expect(screen.getByRole('link', { name: 'Close' })).toHaveAttribute(
+      'href',
+      '/?page=3'
+    );
   });
 });
 
 describe('detailsLoader', async () => {
   it('returns correct data', async () => {
-    const request = new Request('http://localhost:5173/?details=ASMA0000288988');
+    const request = new Request(
+      'http://localhost:5173/?details=ASMA0000288988'
+    );
     const response = await detailsLoader({ request });
     expect(response).toHaveProperty('uid');
   });

@@ -13,10 +13,11 @@ import NotFound from './components/NotFound/NotFound.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <>    
+    <>
       <Route path="/" element={<App />}>
         <Route index element={<Details />} loader={detailsLoader} />
-      </Route>,
+      </Route>
+      ,
       <Route path="*" element={<NotFound />} />
     </>
   )
