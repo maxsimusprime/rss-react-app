@@ -1,7 +1,7 @@
 import { describe, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Loading from '../Loading';
+import Loading from '../components/_ui/bars/Loading/Loading';
 
 describe('Loading component', () => {
   it('renders correctly', () => {

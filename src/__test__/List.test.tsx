@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { describe, it, vi } from 'vitest';
-import List from '../List';
+import List from '../components/List/List';
 import { MemoryRouter } from 'react-router-dom';
-import { astronomicalObjects, page } from '../../../mocks/objects';
+import { astronomicalObjects, page } from '../mocks/objects';
 
 const { mockedContext } = vi.hoisted(() => {
   return { mockedContext: vi.fn() };
@@ -25,8 +25,8 @@ vi.mock('react', async (importOriginal) => {
   };
 });
 
-describe('List component', () => {
-  it('renders the specified number of cards', async () => {
+describe('List (Card List) component', () => {
+  it('component renders the specified number of cards', async () => {
     mockedContext.mockReturnValue({
       items: astronomicalObjects,
       page,
@@ -46,7 +46,7 @@ describe('List component', () => {
     expect(items.length).toBe(countOfItemsOnPage);
   });
 
-  it('message is displayed if no cards are present', async () => {
+  it('appropriate message is displayed if no cards are present', async () => {
     mockedContext.mockReturnValue({
       items: [],
       page: { totalElements: 0 },

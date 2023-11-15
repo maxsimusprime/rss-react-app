@@ -1,10 +1,15 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, it, vi } from 'vitest';
-import Details from '../Details';
-import { MemoryRouter } from 'react-router-dom';
-import astronomicalObject from '../../../mocks/astronomicalObject';
-import { detailsLoader } from '../Details';
+import Details from '../components/Details/Details';
+import {
+  MemoryRouter,
+  RouterProvider,
+  createMemoryRouter,
+} from 'react-router-dom';
+import astronomicalObject from '../mocks/astronomicalObject';
+import { detailsLoader } from '../components/Details/Details';
+import App from '../App';
 
 const { mockedUseNavigation } = vi.hoisted(() => {
   return { mockedUseNavigation: vi.fn() };
@@ -19,7 +24,7 @@ vi.mock('react-router-dom', async (importOriginal) => {
   };
 });
 
-describe('Details component', async () => {
+describe('Details (Detailed Card) component', async () => {
   it('loading indicator is displayed while fetching data', () => {
     mockedUseNavigation.mockReturnValue({ state: 'loading' });
     render(
@@ -49,6 +54,35 @@ describe('Details component', async () => {
       '/?page=3'
     );
   });
+
+  it('clicking the close button hides the component', async () => {
+    const memoryRouter = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: <App />,
+          children: [
+            {
+              path: '/',
+              element: <Details />,
+              loader: vi.fn(() => astronomicalObject),
+            },
+          ],
+        },
+      ],
+      {
+        initialEntries: ['/?details=ASMA0000288988'],
+      }
+    );
+
+    render(<RouterProvider router={memoryRouter} />);
+
+    waitFor(() => {
+      const closeLink = screen.getByRole('link', { name: 'Close' });
+      fireEvent.click(closeLink);
+      expect(screen.getAllByTestId('details')).not.toBeInTheDocument();
+    });
+  });
 });
 
 describe('detailsLoader', async () => {
@@ -60,7 +94,7 @@ describe('detailsLoader', async () => {
     expect(response).toHaveProperty('uid');
   });
 
-  it('returns null wen incorrect data', async () => {
+  it('returns null when incorrect data', async () => {
     const request = new Request('http://localhost:5173/');
     const response = await detailsLoader({ request });
     expect(response).toBe(null);

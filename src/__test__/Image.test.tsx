@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { describe, it } from 'vitest';
-import Image from '../Image';
-import { imageSrc } from '../Image';
+import Image from '../components/Item/Image';
+import { imageSrc } from '../components/Item/Image';
 
 describe('Image component', () => {
   it('renders correctly', async () => {

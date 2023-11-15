@@ -25,7 +25,7 @@ export default function Details() {
   if (closeLink.has('details')) closeLink.delete('details');
 
   return (
-    <div className="details">
+    <div className="details" data-testid="details">
       {navigation.state === 'loading' ? (
         <Loading />
       ) : (

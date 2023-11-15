@@ -111,9 +111,9 @@ export const page = {
 };
 
 export const astronomicalObjectBaseResponse: AstronomicalObjectBaseResponse = {
-  astronomicalObjects,
   page,
   sort: {
     clauses: [],
   },
+  astronomicalObjects,
 };

@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { describe, it } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
-import NotFound from '../NotFound';
+import NotFound from '../components/NotFound/NotFound';
 
 describe('Page 404 component', () => {
   it('displayed when navigating to an invalid route', () => {

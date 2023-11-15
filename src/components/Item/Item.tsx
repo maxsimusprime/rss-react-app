@@ -11,7 +11,11 @@ export default function Item(props: AstronomicalObject) {
   params.append('details', uid);
 
   return (
-    <NavLink to={`?${params.toString()}`} className={'item__link'}>
+    <NavLink
+      to={`?${params.toString()}`}
+      data-testid="card"
+      className={'item__link'}
+    >
       <div className="item">
         <div className="item__logo">
           <Image astronomicalObjectType={astronomicalObjectType} />
