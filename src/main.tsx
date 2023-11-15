@@ -11,6 +11,14 @@ import Details, { detailsLoader } from './components/Details/Details.tsx';
 import ErrorBoundary from './ErrorBoundary.tsx';
 import NotFound from './components/NotFound/NotFound.tsx';
 
+async function enableMocking() {
+  if (process.env.NODE_ENV !== 'development') {
+    return;
+  }
+  const { worker } = await import('./mocks/browser');
+  return worker.start();
+}
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -23,10 +31,12 @@ const router = createBrowserRouter(
   )
 );
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <ErrorBoundary>
-      <RouterProvider router={router} />
-    </ErrorBoundary>
-  </React.StrictMode>
-);
+enableMocking().then(() => {
+  ReactDOM.createRoot(document.getElementById('root')!).render(
+    <React.StrictMode>
+      <ErrorBoundary>
+        <RouterProvider router={router} />
+      </ErrorBoundary>
+    </React.StrictMode>
+  );
+});
