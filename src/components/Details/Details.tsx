@@ -1,23 +1,18 @@
 import {
   NavLink,
-  useLoaderData,
   useLocation,
   useNavigation,
+  useOutletContext,
 } from 'react-router-dom';
-import { getAstronomicalObjectById } from '../../api/api';
-import { AstronomicalObject } from '../../dto/types';
 import './Details.css';
 import Image from '../Item/Image';
 import Loading from '../_ui/bars/Loading/Loading';
-
-export const detailsLoader = async ({ request }: { request: Request }) => {
-  const url = new URL(request.url);
-  const uid = url.searchParams.get('details');
-  return uid ? await getAstronomicalObjectById({ uid }) : null;
-};
+import { useGetItemByIdQuery } from '../../services/api';
 
 export default function Details() {
-  const astronomicalObject = useLoaderData() as AstronomicalObject;
+  const [uid] = useOutletContext<string>();
+  const { data } = useGetItemByIdQuery(uid);
+
   const navigation = useNavigation();
 
   const location = useLocation();
@@ -30,22 +25,26 @@ export default function Details() {
         <Loading />
       ) : (
         <div className="details__content">
-          {astronomicalObject?.astronomicalObjectType && (
+          {data?.astronomicalObject.astronomicalObjectType && (
             <Image
-              astronomicalObjectType={astronomicalObject.astronomicalObjectType}
+              astronomicalObjectType={
+                data.astronomicalObject.astronomicalObjectType
+              }
             />
           )}
-          {astronomicalObject?.name && <div>Details:</div>}
-          {astronomicalObject?.name && (
-            <div>Name: {astronomicalObject?.name}</div>
+          {data?.astronomicalObject.name && <div>Details:</div>}
+          {data?.astronomicalObject.name && (
+            <div>Name: {data?.astronomicalObject.name}</div>
           )}
-          {astronomicalObject?.astronomicalObjectType && (
-            <div>Type: {astronomicalObject?.astronomicalObjectType}</div>
+          {data?.astronomicalObject.astronomicalObjectType && (
+            <div>Type: {data?.astronomicalObject.astronomicalObjectType}</div>
           )}
-          {astronomicalObject?.location?.name && (
-            <div>Location: {astronomicalObject?.location?.name}</div>
+          {data?.astronomicalObject.location?.name && (
+            <div>Location: {data?.astronomicalObject.location?.name}</div>
           )}
-          {astronomicalObject?.uid && <div>ID: {astronomicalObject?.uid}</div>}
+          {data?.astronomicalObject.uid && (
+            <div>ID: {data?.astronomicalObject.uid}</div>
+          )}
           <NavLink to={`?${closeLink.toString()}`}>Close</NavLink>
         </div>
       )}

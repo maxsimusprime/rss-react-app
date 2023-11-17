@@ -7,7 +7,7 @@ import {
   createRoutesFromElements,
 } from 'react-router-dom';
 import App from './App.tsx';
-import Details, { detailsLoader } from './components/Details/Details.tsx';
+import Details from './components/Details/Details.tsx';
 import ErrorBoundary from './ErrorBoundary.tsx';
 import NotFound from './components/NotFound/NotFound.tsx';
 import { Provider } from 'react-redux';
@@ -25,7 +25,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<App />}>
-        <Route index element={<Details />} loader={detailsLoader} />
+        <Route index element={<Details />} />
       </Route>
       ,
       <Route path="*" element={<NotFound />} />
