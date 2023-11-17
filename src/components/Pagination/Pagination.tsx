@@ -1,10 +1,10 @@
+import type { Page } from '../../dto/types';
 import './Pagination.css';
 import { NavLink } from 'react-router-dom';
-import { useContext } from 'react';
-import { AppContext } from '../../AppContext';
+// import { useAppSelector } from '../../hooks/useAppSelector';
 
-export default function Pagination() {
-  const { page } = useContext(AppContext);
+export default function Pagination({ page }: { page: Page }) {
+  // const { page } = useAppSelector((state) => state.item);
 
   return (
     <div className="pagination" data-testid={'pagination'}>
