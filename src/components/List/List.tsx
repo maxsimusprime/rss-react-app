@@ -2,14 +2,23 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Item from '../Item/Item';
 import Pagination from '../Pagination/Pagination';
 import styles from './list.module.css';
-import { useContext, type MouseEvent } from 'react';
-import { AppContext } from '../../AppContext';
+import { type MouseEvent } from 'react';
+import { api } from '../../services/api';
+import Loading from '../_ui/bars/Loading/Loading';
+import { useAppSelector } from '../../hooks/useAppSelector';
 
 export default function List() {
-  const { items, page } = useContext(AppContext);
-
   const location = useLocation();
   const navigate = useNavigate();
+  const { searchQuery, pageNumber, pageSize } = useAppSelector(
+    (state) => state.item
+  );
+
+  const { data, error, isLoading } = api.useGetItemsQuery({
+    pageNumber,
+    pageSize,
+    searchQuery,
+  });
 
   const listClickHandle = (e: MouseEvent) => {
     e.preventDefault();
@@ -23,13 +32,24 @@ export default function List() {
   };
 
   return (
-    <div className={styles.wrapper} onClick={(e) => listClickHandle(e)}>
-      {page && page.totalElements > 0 && <Pagination />}
-      <div className={styles.list}>
-        {items && items.length <= 0
-          ? 'Items Not Found'
-          : items?.map((item) => <Item {...item} key={item.uid} />)}
-      </div>
-    </div>
+    <>
+      {error && <div>Fetching Data Error</div>}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div className={styles.wrapper} onClick={(e) => listClickHandle(e)}>
+          {data?.page && data.page.numberOfElements > 0 && (
+            <Pagination page={data.page} />
+          )}
+          <div className={styles.list}>
+            {data?.astronomicalObjects && data.astronomicalObjects.length <= 0
+              ? 'Items Not Found'
+              : data?.astronomicalObjects?.map((item) => (
+                  <Item {...item} key={item.uid} />
+                ))}
+          </div>
+        </div>
+      )}
+    </>
   );
 }
