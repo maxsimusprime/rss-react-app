@@ -1,13 +1,16 @@
-export default function SearchLimit({
-  setPageLimit,
-  setSearchParams,
-}: {
-  setPageLimit: (pageLimit: number) => void;
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { setSearchState } from '../../store/slices/searchSlice';
+
+interface SearchLimitProps {
   setSearchParams: (params: URLSearchParams) => void;
-}) {
+}
+
+export default function SearchLimit({ setSearchParams }: SearchLimitProps) {
+  const dispatch = useAppDispatch();
+
   const setLimitHandle = (limit: number): void => {
     setSearchParams(new URLSearchParams({ page: '0' }));
-    setPageLimit(limit);
+    dispatch(setSearchState({ pageSize: limit }));
   };
 
   return (
