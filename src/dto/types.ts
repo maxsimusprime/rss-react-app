@@ -26,6 +26,10 @@ type AstronomicalObjectBaseResponse = {
   astronomicalObjects: AstronomicalObject[];
 };
 
+type AstronomicalObjectResponse = {
+  astronomicalObject: AstronomicalObject;
+};
+
 type ResponseError = {
   error: string;
 };
@@ -47,6 +51,7 @@ export type {
   AstronomicalObject,
   AstronomicalObjectType,
   AstronomicalObjectBaseResponse,
+  AstronomicalObjectResponse,
   Page,
   ResponseError,
   SearchProps,
