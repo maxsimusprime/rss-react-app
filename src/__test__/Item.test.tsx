@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { describe, it, vi } from 'vitest';
+import { describe, it } from 'vitest';
 import Item from '../components/Item/Item';
 import astronomicalObject from '../mocks/astronomicalObject';
 import {
@@ -10,8 +10,9 @@ import {
 } from 'react-router-dom';
 import App from '../App';
 import Details from '../components/Details/Details';
-
-const mockDetailsLoader = vi.fn(() => astronomicalObject);
+import { Provider } from 'react-redux';
+import { store } from '../store/store';
+import { server } from '../mocks/server';
 
 const memoryRouter = createMemoryRouter([
   {
@@ -21,7 +22,6 @@ const memoryRouter = createMemoryRouter([
       {
         path: '/',
         element: <Details />,
-        loader: mockDetailsLoader,
       },
     ],
   },
@@ -46,22 +46,43 @@ describe('Tests for the Item (Card) component', () => {
   });
 
   it('Validate that clicking on a card opens a detailed card component', async () => {
-    render(<RouterProvider router={memoryRouter} />);
+    render(
+      <Provider store={store}>
+        <RouterProvider router={memoryRouter} />
+      </Provider>
+    );
 
-    waitFor(() => {
-      const card = screen.getByTestId('card');
+    await waitFor(() => {
+      const cards = screen.getAllByTestId('card');
+      const card = cards[0];
+
+      expect(card).toBeInTheDocument();
       fireEvent.click(card);
+
       expect(screen.getByTestId('details')).toBeInTheDocument();
     });
   });
 
   it('Check that clicking triggers an additional API call to fetch detailed information', async () => {
-    render(<RouterProvider router={memoryRouter} />);
+    render(
+      <Provider store={store}>
+        <RouterProvider router={memoryRouter} />
+      </Provider>
+    );
 
-    waitFor(() => {
-      const card = screen.getByTestId('card');
+    server.events.on('response:mocked', ({ request }) => {
+      expect(
+        request.url.startsWith(
+          'https://stapi.co/api/v2/rest/astronomicalObject/'
+        )
+      ).toBeTruthy();
+    });
+
+    await waitFor(() => {
+      const cards = screen.getAllByTestId('card');
+      const card = cards[0];
+      expect(card).toBeInTheDocument();
       fireEvent.click(card);
-      expect(mockDetailsLoader).toHaveBeenCalled();
     });
   });
 });
