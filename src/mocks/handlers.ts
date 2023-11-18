@@ -5,21 +5,21 @@ import {
   nullAstronomicalObjectBaseResponse,
 } from './objects';
 
-export const astronomicalObjectResponse = http.get(
+export const astronomicalObjectResponseHandler = http.get(
   'https://stapi.co/api/v2/rest/astronomicalObject/',
   () => {
     return HttpResponse.json({ astronomicalObject });
   }
 );
 
-export const astronomicalObjectBaseResponseHandle = http.post(
+export const astronomicalObjectBaseResponseHandler = http.post(
   'https://stapi.co/api/v2/rest/astronomicalObject/search',
   () => {
     return HttpResponse.json({ ...astronomicalObjectBaseResponse });
   }
 );
 
-export const nullAstronomicalObjectBaseResponseHandle = http.post(
+export const nullAstronomicalObjectBaseResponseHandler = http.post(
   'https://stapi.co/api/v2/rest/astronomicalObject/search',
   () => {
     return HttpResponse.json({ ...nullAstronomicalObjectBaseResponse });
@@ -27,6 +27,6 @@ export const nullAstronomicalObjectBaseResponseHandle = http.post(
 );
 
 export const handlers = [
-  astronomicalObjectResponse,
-  astronomicalObjectBaseResponseHandle,
+  astronomicalObjectResponseHandler,
+  astronomicalObjectBaseResponseHandler,
 ];
