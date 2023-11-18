@@ -13,14 +13,6 @@ import NotFound from './components/NotFound/NotFound.tsx';
 import { Provider } from 'react-redux';
 import { store } from './store/store.ts';
 
-async function enableMocking() {
-  if (process.env.NODE_ENV !== 'development') {
-    return;
-  }
-  const { worker } = await import('./mocks/browser');
-  return worker.start();
-}
-
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -33,14 +25,12 @@ const router = createBrowserRouter(
   )
 );
 
-enableMocking().then(() => {
-  ReactDOM.createRoot(document.getElementById('root')!).render(
-    <React.StrictMode>
-      <ErrorBoundary>
-        <Provider store={store}>
-          <RouterProvider router={router} />
-        </Provider>
-      </ErrorBoundary>
-    </React.StrictMode>
-  );
-});
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <ErrorBoundary>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    </ErrorBoundary>
+  </React.StrictMode>
+);

@@ -117,3 +117,20 @@ export const astronomicalObjectBaseResponse: AstronomicalObjectBaseResponse = {
   },
   astronomicalObjects,
 };
+
+export const nullAstronomicalObjectBaseResponse: AstronomicalObjectBaseResponse =
+  {
+    page: {
+      pageNumber: 0,
+      pageSize: 10,
+      numberOfElements: 0,
+      totalElements: 0,
+      totalPages: 0,
+      firstPage: false,
+      lastPage: false,
+    },
+    sort: {
+      clauses: [],
+    },
+    astronomicalObjects: [],
+  };
