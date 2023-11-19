@@ -1,6 +1,7 @@
 import {
   AstronomicalObject,
   AstronomicalObjectBaseResponse,
+  Page,
 } from '../dto/types';
 
 export const astronomicalObject: AstronomicalObject = {
@@ -100,7 +101,7 @@ export const astronomicalObjects: AstronomicalObject[] = [
   },
 ];
 
-export const page = {
+export const page: Page = {
   pageNumber: 0,
   pageSize: 10,
   numberOfElements: 10,
