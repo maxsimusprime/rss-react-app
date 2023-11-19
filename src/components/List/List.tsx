@@ -14,7 +14,7 @@ export default function List() {
     (state) => state.item
   );
 
-  const { data, error, isLoading } = api.useGetItemsQuery({
+  const { data, isError, isLoading, isSuccess } = api.useGetItemsQuery({
     pageNumber,
     pageSize,
     searchQuery,
@@ -31,25 +31,28 @@ export default function List() {
     }
   };
 
-  return (
-    <>
-      {error && <div>Fetching Data Error</div>}
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <div className={styles.wrapper} onClick={(e) => listClickHandle(e)}>
-          {data?.page && data.page.numberOfElements > 0 && (
-            <Pagination page={data.page} />
-          )}
-          <div className={styles.list}>
-            {data?.astronomicalObjects && data.astronomicalObjects.length <= 0
-              ? 'Items Not Found'
-              : data?.astronomicalObjects?.map((item) => (
-                  <Item {...item} key={item.uid} />
-                ))}
-          </div>
+  if (isError) {
+    return <div>Fetching Data Error</div>;
+  }
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isSuccess && data) {
+    return (
+      <div className={styles.wrapper} onClick={(e) => listClickHandle(e)}>
+        {data?.page && data.page.numberOfElements > 0 && (
+          <Pagination page={data.page} />
+        )}
+        <div className={styles.list}>
+          {data?.astronomicalObjects && data.astronomicalObjects.length <= 0
+            ? 'Items Not Found'
+            : data?.astronomicalObjects?.map((item) => (
+                <Item {...item} key={item.uid} />
+              ))}
         </div>
-      )}
-    </>
-  );
+      </div>
+    );
+  }
 }
