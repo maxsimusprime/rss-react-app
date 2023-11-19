@@ -27,7 +27,7 @@ export default function Search({ setSearchParams }: SerchProps) {
   };
 
   return (
-    <div className="search">
+    <div className="search" data-testid={'search'}>
       <input
         type="search"
         value={inputValue}
