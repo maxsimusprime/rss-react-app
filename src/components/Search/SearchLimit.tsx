@@ -1,16 +1,11 @@
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { setSearchState } from '../../store/slices/searchSlice';
 
-interface SearchLimitProps {
-  setSearchParams: (params: URLSearchParams) => void;
-}
-
-export default function SearchLimit({ setSearchParams }: SearchLimitProps) {
+export default function SearchLimit() {
   const dispatch = useAppDispatch();
 
   const setLimitHandle = (limit: number): void => {
-    setSearchParams(new URLSearchParams({ page: '0' }));
-    dispatch(setSearchState({ pageSize: limit }));
+    dispatch(setSearchState({ pageSize: limit, pageNumber: 0 }));
   };
 
   return (

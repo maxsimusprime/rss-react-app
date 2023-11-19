@@ -22,7 +22,7 @@ export default function App() {
       <header className="header">
         <Search setSearchParams={setSearchParams} />
         <ErrorButton />
-        <SearchLimit setSearchParams={setSearchParams} />
+        <SearchLimit />
       </header>
       <hr />
       <main className="main">
