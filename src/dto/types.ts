@@ -63,3 +63,7 @@ export type ContextInitialState = {
   items: AstronomicalObject[];
   page: Page;
 };
+
+export interface SerchProps {
+  setSearchParams: (params: URLSearchParams) => void;
+}

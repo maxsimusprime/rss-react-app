@@ -22,7 +22,7 @@ describe('Page 404 component', () => {
         <RouterProvider router={browserRouter} />
       </Provider>
     );
-    
+
     await waitFor(() => {
       browserRouter.navigate('/some/bad/route');
       expect(screen.getByTestId('not-found')).toBeInTheDocument();

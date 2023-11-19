@@ -19,7 +19,7 @@ export default function Details() {
 
   if (isError) {
     return <div>Error While Getting Details Data</div>;
- }
+  }
 
   return (
     <div className="details" data-testid="details">

@@ -3,10 +3,7 @@ import './search.css';
 import { setSearchState } from '../../store/slices/searchSlice';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-
-interface SerchProps {
-  setSearchParams: (params: URLSearchParams) => void;
-}
+import { SerchProps } from '../../dto/types';
 
 export default function Search({ setSearchParams }: SerchProps) {
   const { searchQuery } = useAppSelector((state) => state.search);
