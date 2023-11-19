@@ -14,7 +14,7 @@ export default function List() {
     (state) => state.search
   );
 
-  const { data, isError, isLoading, isSuccess } = api.useGetItemsQuery({
+  const { data, isError, isFetching, isSuccess } = api.useGetItemsQuery({
     pageNumber,
     pageSize,
     searchQuery,
@@ -35,7 +35,7 @@ export default function List() {
     return <div>Fetching Data Error</div>;
   }
 
-  if (isLoading) {
+  if (isFetching) {
     return <Loading />;
   }
 

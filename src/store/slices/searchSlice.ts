@@ -14,8 +14,8 @@ const initialState: SearchState = {
   pageSize: PAGE_LIMIT,
 };
 
-const itemSlice = createSlice({
-  name: 'item',
+const searchSlice = createSlice({
+  name: 'search',
   initialState,
   reducers: {
     setSearchState: (state, action: PayloadAction<Partial<SearchState>>) =>
@@ -23,5 +23,5 @@ const itemSlice = createSlice({
   },
 });
 
-export const { setSearchState } = itemSlice.actions;
-export default itemSlice;
+export const { setSearchState } = searchSlice.actions;
+export default searchSlice;

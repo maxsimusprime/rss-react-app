@@ -7,19 +7,19 @@ import { useGetItemByIdQuery } from '../../services/api';
 export default function Details() {
   const [uid] = useOutletContext<string>();
 
-  const { data, isLoading, isError, isSuccess } = useGetItemByIdQuery(uid);
+  const { data, isFetching, isError, isSuccess } = useGetItemByIdQuery(uid);
 
   const location = useLocation();
   const closeLink = new URLSearchParams(location.search);
   if (closeLink.has('details')) closeLink.delete('details');
 
-  if (isLoading) {
+  if (isFetching) {
     return <Loading />;
   }
 
-  if  (isError) {
-    return <div>Error While Getting Details Data</div>
-  }
+  if (isError) {
+    return <div>Error While Getting Details Data</div>;
+ }
 
   return (
     <div className="details" data-testid="details">
