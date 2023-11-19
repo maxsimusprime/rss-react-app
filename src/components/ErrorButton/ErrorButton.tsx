@@ -4,6 +4,7 @@ export default function ErrorButton() {
       onClick={() => {
         throw new Error('Error button handle');
       }}
+      data-testid={'error-button'}
     >
       Error
     </button>
