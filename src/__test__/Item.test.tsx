@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, it } from 'vitest';
 import Item from '../components/Item/Item';
-import astronomicalObject from '../mocks/astronomicalObject';
+import { astronomicalObject } from '../mocks/objects';
 import {
   MemoryRouter,
   RouterProvider,

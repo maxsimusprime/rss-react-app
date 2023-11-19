@@ -9,7 +9,7 @@ interface SerchProps {
 }
 
 export default function Search({ setSearchParams }: SerchProps) {
-  const { searchQuery } = useAppSelector((state) => state.item);
+  const { searchQuery } = useAppSelector((state) => state.search);
   const dispatch = useAppDispatch();
 
   const [inputValue, setInputValue] = useState<string>(searchQuery);

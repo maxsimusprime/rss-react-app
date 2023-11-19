@@ -11,7 +11,7 @@ export default function List() {
   const location = useLocation();
   const navigate = useNavigate();
   const { searchQuery, pageNumber, pageSize } = useAppSelector(
-    (state) => state.item
+    (state) => state.search
   );
 
   const { data, isError, isLoading, isSuccess } = api.useGetItemsQuery({

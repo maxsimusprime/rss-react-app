@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import itemSlice from './slices/searchSlice';
+import searchSlice from './slices/searchSlice';
 import { api } from '../services/api';
 
 export const store = configureStore({
   reducer: {
-    item: itemSlice.reducer,
+    search: searchSlice.reducer,
     [api.reducerPath]: api.reducer,
   },
   devTools: process.env.NODE_ENV !== 'development' ? false : true,

@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import astronomicalObject from './astronomicalObject';
+import { astronomicalObject } from './objects';
 import {
   astronomicalObjectBaseResponse,
   nullAstronomicalObjectBaseResponse,
