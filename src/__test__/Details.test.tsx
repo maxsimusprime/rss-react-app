@@ -2,78 +2,72 @@ import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { describe, it } from 'vitest';
 import Details from '../components/Details/Details';
-import { Outlet, RouterProvider, createMemoryRouter } from 'react-router-dom';
-import App from '../App';
+import mockRouter from 'next-router-mock';
+import { MemoryRouterProvider } from 'next-router-mock/MemoryRouterProvider';
+import { store } from '@/store/store';
 import { Provider } from 'react-redux';
-import { store } from '../store/store';
-import { server } from '../mocks/server';
+import { setDetailState } from '@/store/slices/detailSlice';
+import { server } from '@/mocks/server';
+import Index from '@/pages/index';
 
-const memoryRouter = createMemoryRouter(
-  [
-    {
-      path: '/',
-      element: <App />,
-      children: [
-        {
-          path: '/',
-          element: <Outlet context={'ASMA0000288988'} />,
-          children: [
-            {
-              path: '/',
-              element: <Details />,
-            },
-          ],
-        },
-      ],
-    },
-  ],
-  { initialEntries: ['/?page=3&details=ASMA0000288988'] }
-);
+vi.mock('next/router', async () => await vi.importActual('next-router-mock'));
 
 describe('Details (Detailed Card) component', async () => {
   it('correctly displays the detailed card data', async () => {
+    mockRouter.push('/?pageSize=0&pageNumber=0&details=ASMA0000288988');
+    store.dispatch(setDetailState({ isLoading: false, uid: 'ASMA0000288988' }));
     render(
       <Provider store={store}>
-        <RouterProvider router={memoryRouter} />
-      </Provider>
+        <Details uid={'ASMA0000288988'} />
+      </Provider>,
+      {
+        wrapper: MemoryRouterProvider,
+      }
     );
 
     await waitFor(() => {
-      const details = screen.getByTestId('details');
-      expect(details).toBeInTheDocument();
-      expect(
-        details.innerHTML.match('/assets/images/star-system.png')
-      ).toBeTruthy();
-      expect(details.innerHTML.match('ASMA0000288988')).toBeTruthy();
-
-      expect(screen.getByRole('link', { name: 'Close' })).toHaveAttribute(
+      expect(screen.getByTestId('details')).toBeInTheDocument();
+      expect(screen.getByTestId('details-close')).toBeInTheDocument();
+      expect(screen.getByRole('link')).toHaveAttribute(
         'href',
-        '/?page=3'
+        '/?pageSize=0&pageNumber=0'
       );
+      expect(screen.getByRole('img')).toHaveAttribute('alt', 'card-logo');
     });
   });
 
   it('clicking the close button hides the component', async () => {
+    mockRouter.push('/?pageSize=0&pageNumber=0&details=ASMA0000288988');
+    store.dispatch(setDetailState({ isLoading: false, uid: 'ASMA0000288988' }));
     render(
       <Provider store={store}>
-        <RouterProvider router={memoryRouter} />
-      </Provider>
+        <Index/>
+      </Provider>,
+      {
+        wrapper: MemoryRouterProvider,
+      }
     );
 
     await waitFor(() => {
-      const details = screen.getByTestId('details');
-      expect(details).toBeInTheDocument();
+      expect(screen.getByTestId('details')).toBeInTheDocument();
+
       const closeLink = screen.getByRole('link', { name: 'Close' });
       fireEvent.click(closeLink);
-      expect(details).not.toBeInTheDocument();
+
+      expect(mockRouter.asPath).toBe('/?pageSize=0&pageNumber=0');
     });
   });
 
   it('loading indicator is displayed while fetching data', async () => {
+    mockRouter.push('/?pageSize=0&pageNumber=0&details=ASMA0000288988');
+    store.dispatch(setDetailState({ isLoading: false, uid: 'ASMA0000288988' }));
     render(
       <Provider store={store}>
-        <RouterProvider router={memoryRouter} />
-      </Provider>
+        <Details uid={'ASMA0000288988'} />
+      </Provider>,
+      {
+        wrapper: MemoryRouterProvider,
+      }
     );
 
     server.events.on('request:start', () => {
