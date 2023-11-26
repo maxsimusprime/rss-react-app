@@ -22,7 +22,7 @@ const detailSlice = createSlice({
   extraReducers: {
     [HYDRATE]: (
       state: DetailState,
-      action: PayloadAction<{ detail: Partial<DetailState>}>
+      action: PayloadAction<{ detail: Partial<DetailState> }>
     ) => {
       Object.assign(state, action.payload.detail);
     },

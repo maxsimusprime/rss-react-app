@@ -1,13 +1,13 @@
 import Search from '@/components/Search/Search';
-import PageSize from '@/components/Search/PageSize'
+import PageSize from '@/components/Search/PageSize';
 import { FC, PropsWithChildren } from 'react';
 
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <>
-      <header className='header'>
+      <header className="header">
         <Search />
-        <PageSize/>
+        <PageSize />
       </header>
       {children}
     </>

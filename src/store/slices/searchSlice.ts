@@ -25,7 +25,7 @@ const searchSlice = createSlice({
   extraReducers: {
     [HYDRATE]: (
       state: SearchState,
-      action: PayloadAction<{ search: Partial<SearchState>}>
+      action: PayloadAction<{ search: Partial<SearchState> }>
     ) => {
       Object.assign(state, action.payload.search);
     },
