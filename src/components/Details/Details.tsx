@@ -1,32 +1,45 @@
-import { NavLink, useLocation, useOutletContext } from 'react-router-dom';
-import './Details.css';
-import Image from '../Item/Image';
-import Loading from '../_ui/bars/Loading/Loading';
-import { useGetItemByIdQuery } from '../../services/api';
+import styles from './Details.module.css';
+import CardLogo from '@/components/Card/CardLogo';
+import Loading from '@/components/_ui/bars/Loading/Loading';
+import { useGetItemByIdQuery } from '@/services/api';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { FC } from 'react';
 
-export default function Details() {
-  const [uid] = useOutletContext<string>();
+interface DetailsProps {
+  uid: string;
+}
 
-  const { data, isFetching, isError, isSuccess } = useGetItemByIdQuery(uid);
+const Details: FC<DetailsProps> = ({ uid }) => {
+  const result = useGetItemByIdQuery(uid);
+  const { isLoading, error, data } = result;
 
-  const location = useLocation();
-  const closeLink = new URLSearchParams(location.search);
-  if (closeLink.has('details')) closeLink.delete('details');
+  const router = useRouter();
+  const query = Object.assign({}, { ...router.query });
+  let linkHref = '/';
+  if (query.query === 'search') {
+    delete query.query;
+    linkHref += 'search';
+  }
+  delete query.details;
+  const queryString = Object.keys(query)
+    .map((key) => key + '=' + query[key])
+    .join('&');
 
-  if (isFetching) {
+  if (isLoading) {
     return <Loading />;
   }
 
-  if (isError) {
+  if (error) {
     return <div>Error While Getting Details Data</div>;
   }
 
   return (
-    <div className="details" data-testid="details">
-      {isSuccess && data && (
-        <div className="details__content">
+    <div className={styles.details} data-testid="details">
+      {data && (
+        <div className={styles.details__content}>
           {data.astronomicalObject.astronomicalObjectType && (
-            <Image
+            <CardLogo
               astronomicalObjectType={
                 data.astronomicalObject.astronomicalObjectType
               }
@@ -45,9 +58,16 @@ export default function Details() {
           {data.astronomicalObject.uid && (
             <div>ID: {data.astronomicalObject.uid}</div>
           )}
-          <NavLink to={`?${closeLink.toString()}`}>Close</NavLink>
+          <Link
+            href={`${linkHref}?${queryString}`}
+            data-testid={'details-close'}
+          >
+            Close
+          </Link>
         </div>
       )}
     </div>
   );
-}
+};
+
+export default Details;
