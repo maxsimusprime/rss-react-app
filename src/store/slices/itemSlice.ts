@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { HYDRATE } from 'next-redux-wrapper';
+
 
 interface ItemState {
   isLoading: boolean;
@@ -15,6 +17,14 @@ const itemSlice = createSlice({
   reducers: {
     setItemState: (state, action: PayloadAction<Partial<ItemState>>) =>
       Object.assign(state, action.payload),
+  },
+  extraReducers: {
+    [HYDRATE]: (
+      state: ItemState,
+      action: PayloadAction<{ item: Partial<ItemState>}>
+    ) => {
+      Object.assign(state, action.payload.item);
+    },
   },
 });
 

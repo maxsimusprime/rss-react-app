@@ -4,8 +4,9 @@ import type {
 } from '../dto/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URI } from '../dto/constants';
-import { setItemState } from '../store/slices/itemSlise';
-import { setDetailState } from '../store/slices/detailSlise';
+import { setItemState } from '../store/slices/itemSlice';
+import { setDetailState } from '../store/slices/detailSlice';
+import { HYDRATE } from 'next-redux-wrapper';
 
 interface GetItemsQueryParams {
   pageNumber: number;
@@ -16,6 +17,11 @@ interface GetItemsQueryParams {
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URI }),
+  extractRehydrationInfo(action, { reducerPath }) {
+    if (action.type === HYDRATE) {
+      return action.payload[reducerPath];
+    }
+  },
   endpoints: (builder) => ({
     getItems: builder.query<
       AstronomicalObjectBaseResponse,
@@ -62,4 +68,10 @@ export const api = createApi({
   }),
 });
 
-export const { useGetItemsQuery, useGetItemByIdQuery } = api;
+export const {
+  useGetItemsQuery,
+  useGetItemByIdQuery,
+  util: { getRunningQueriesThunk },
+} = api;
+
+export const { getItems, getItemById } = api.endpoints;
