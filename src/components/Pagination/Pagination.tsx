@@ -1,34 +1,44 @@
-import type { Page } from '../../dto/types';
-import './Pagination.css';
-import { NavLink } from 'react-router-dom';
+import { FC } from 'react';
+import type { Page } from '@/dto/types';
+import styles from './Pagination.module.css';
+import Link from 'next/link';
 
-export default function Pagination({ page }: { page: Page }) {
-  if (page) {
-    return (
-      <div className="pagination" data-testid={'pagination'}>
-        {page.firstPage ? (
-          <span className="control">{'<'}</span>
-        ) : (
-          <NavLink
-            className="control"
-            to={`?page=${Number(page.pageNumber) - 1}`}
-          >
-            {'<'}
-          </NavLink>
-        )}
-        <span className="current">{page.pageNumber}</span>
-        {page.lastPage ? (
-          <span className="control">{'>'}</span>
-        ) : (
-          <NavLink
-            className="control"
-            to={`?page=${Number(page.pageNumber) + 1}`}
-            data-testid={'next-page'}
-          >
-            {'>'}
-          </NavLink>
-        )}
-      </div>
-    );
-  }
-}
+const Pagination: FC<Page> = ({
+  pageNumber,
+  firstPage,
+  lastPage,
+  pageSize,
+}) => {
+  return (
+    <div className={styles.pagination} data-testid={'pagination'}>
+      {firstPage ? (
+        <span className={styles.control}>{'<'}</span>
+      ) : (
+        <Link
+          className={styles.control}
+          href={`/search?pageSize=${pageSize}&pageNumber=${
+            Number(pageNumber) - 1
+          }`}
+        >
+          {'<'}
+        </Link>
+      )}
+      <span className={styles.current}>{pageNumber}</span>
+      {lastPage ? (
+        <span className={styles.control}>{'>'}</span>
+      ) : (
+        <Link
+          className={styles.control}
+          href={`/search?pageSize=${pageSize}&pageNumber=${
+            Number(pageNumber) + 1
+          }`}
+          data-testid={'next-page'}
+        >
+          {'>'}
+        </Link>
+      )}
+    </div>
+  );
+};
+
+export default Pagination;
