@@ -1,5 +1,5 @@
-import detailSlice, { setDetailState } from '../store/slices/detailSlise';
-import itemSlice, { setItemState } from '../store/slices/itemSlise';
+import detailSlice, { setDetailState } from '../store/slices/detailSlice';
+import itemSlice, { setItemState } from '../store/slices/itemSlice';
 import searchSlice, { setSearchState } from '../store/slices/searchSlice';
 
 describe('Actions cretors', () => {
@@ -30,7 +30,7 @@ describe('Reducers', () => {
     expect(newState).toMatchObject(expected);
   });
   it('detailSlice reducer returns new state', () => {
-    const initialState = { isLoading: false };
+    const initialState = { isLoading: false, uid: null };
     const expected = { isLoading: true };
     const newState = detailSlice.reducer(
       initialState,
