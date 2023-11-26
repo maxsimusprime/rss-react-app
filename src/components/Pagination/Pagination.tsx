@@ -16,7 +16,7 @@ const Pagination: FC<Page> = ({
       ) : (
         <Link
           className={styles.control}
-          href={`/search?pageSize=${pageSize}&pageNumber=${
+          href={`/?pageSize=${pageSize}&pageNumber=${
             Number(pageNumber) - 1
           }`}
         >
@@ -29,7 +29,7 @@ const Pagination: FC<Page> = ({
       ) : (
         <Link
           className={styles.control}
-          href={`/search?pageSize=${pageSize}&pageNumber=${
+          href={`/?pageSize=${pageSize}&pageNumber=${
             Number(pageNumber) + 1
           }`}
           data-testid={'next-page'}

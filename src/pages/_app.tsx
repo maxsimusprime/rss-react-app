@@ -3,13 +3,16 @@ import type { AppProps } from 'next/app';
 import { wrapper } from '@/store/store';
 import { FC } from 'react';
 import { Provider } from 'react-redux';
+import ErrorBoundary from '@/ErrorBoundary';
 
 const App: FC<AppProps> = ({ Component, ...rest }) => {
   const { store, props } = wrapper.useWrappedStore(rest);
   return (
-    <Provider store={store}>
-      <Component {...props.pageProps} />
-    </Provider>
+    <ErrorBoundary>
+      <Provider store={store}>
+        <Component {...props.pageProps} />
+      </Provider>
+    </ErrorBoundary>
   );
 };
 
