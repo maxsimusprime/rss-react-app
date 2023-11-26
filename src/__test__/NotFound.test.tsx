@@ -1,31 +1,19 @@
 import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import { describe, it } from 'vitest';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import App from '../App';
-import { store } from '../store/store';
-import { Provider } from 'react-redux';
-import NotFound from '../components/NotFound/NotFound';
+import App from '../pages/404';
+import mockRouter from 'next-router-mock';
+import { MemoryRouterProvider } from 'next-router-mock/MemoryRouterProvider';
 
-const browserRouter = createBrowserRouter([
-  {
-    path: '/',
-    element: <App />,
-    errorElement: <NotFound />,
-  },
-]);
+vi.mock('next/router', async () => await vi.importActual('next-router-mock'));
 
-describe('Page 404 component', () => {
-  it('displayed when navigating to an invalid route', async () => {
-    render(
-      <Provider store={store}>
-        <RouterProvider router={browserRouter} />
-      </Provider>
-    );
+describe('Page 404', () => {
+  it('displays when navigating to an invalid route', async () => {
+    mockRouter.push('/some/bad/route');
+    render(<App />, { wrapper: MemoryRouterProvider });
 
     await waitFor(() => {
-      browserRouter.navigate('/some/bad/route');
-      expect(screen.getByTestId('not-found')).toBeInTheDocument();
+      expect(screen.getByText('Page Not Found')).toBeInTheDocument();
     });
   });
 });
