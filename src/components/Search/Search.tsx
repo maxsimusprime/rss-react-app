@@ -1,42 +1,39 @@
-import { ChangeEvent, useState } from 'react';
-import './search.css';
-import { setSearchState } from '../../store/slices/searchSlice';
-import { useAppSelector } from '../../hooks/useAppSelector';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { SerchProps } from '../../dto/types';
+import { ChangeEvent, FC, useState } from 'react';
+import styles from './Search.module.css';
+import { setCookie } from 'nookies';
+import router from 'next/router';
+import { useAppSelector } from '@/hooks/useAppSelector';
 
-export default function Search({ setSearchParams }: SerchProps) {
+const Search: FC = () => {
   const { searchQuery } = useAppSelector((state) => state.search);
-  const dispatch = useAppDispatch();
-
   const [inputValue, setInputValue] = useState<string>(searchQuery);
 
-  const searchButtonHandle = async (): Promise<void> => {
-    localStorage.setItem('searchQuery', inputValue);
-    dispatch(setSearchState({ searchQuery: inputValue.trim() }));
-
-    setSearchParams(new URLSearchParams({ page: '0' }));
+  const inputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    setInputValue(event.target.value);
   };
 
-  const changeInputHandle = (e: ChangeEvent<HTMLInputElement>): void => {
-    e.preventDefault();
-    setInputValue(e.target.value.trim());
+  const buttonHandler = () => {
+    setCookie(null, 'searchQuery', inputValue, {
+      maxAge: 30 * 24 * 60 * 60,
+      path: '/',
+    });
+    router.push(`/search?pageSize=10&pageNumber=0`);
   };
 
   return (
-    <div className="search" data-testid={'search'}>
+    <div className={styles.search} data-testid={'search'}>
       <input
         type="search"
         value={inputValue}
-        onChange={(e) => changeInputHandle(e)}
+        onChange={(e) => inputHandler(e)}
         data-testid={'search-input'}
       />
-      <button
-        onClick={() => searchButtonHandle()}
-        data-testid={'search-button'}
-      >
+      <button onClick={() => buttonHandler()} data-testid={'search-button'}>
         Search
       </button>
     </div>
   );
-}
+};
+
+export default Search;
