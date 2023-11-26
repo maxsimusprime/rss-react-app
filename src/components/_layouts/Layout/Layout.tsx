@@ -9,7 +9,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
       <header className="header">
         <Search />
         <PageSize />
-        <ErrorButton/>
+        <ErrorButton />
       </header>
       {children}
     </>

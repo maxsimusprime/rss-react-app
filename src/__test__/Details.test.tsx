@@ -41,7 +41,7 @@ describe('Details (Detailed Card) component', async () => {
     store.dispatch(setDetailState({ isLoading: false, uid: 'ASMA0000288988' }));
     render(
       <Provider store={store}>
-        <Index/>
+        <Index />
       </Provider>,
       {
         wrapper: MemoryRouterProvider,

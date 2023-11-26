@@ -48,9 +48,9 @@ const RootPage: NextPage = () => {
   const { uid } = useAppSelector((state) => state.detail);
 
   const result = useGetItemsQuery({
-    searchQuery: searchQuery || '',
-    pageNumber: pageNumber || 0,
-    pageSize: pageSize || 10,
+    searchQuery,
+    pageNumber,
+    pageSize,
   });
   const { isLoading, isError, data } = result;
 
