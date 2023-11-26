@@ -1,17 +1,18 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, it } from 'vitest';
-import SearchLimit from '../components/Search/SearchLimit';
-import { store } from '../store/store';
-import { Provider } from 'react-redux';
+import PageSize from '../components/Search/PageSize';
+import mockRouter from 'next-router-mock';
+import { MemoryRouterProvider } from 'next-router-mock/MemoryRouterProvider';
+
+vi.mock('next/router', async () => await vi.importActual('next-router-mock'));
 
 describe('SearchLimit component', () => {
-  it('renders correctly', async () => {
-    render(
-      <Provider store={store}>
-        <SearchLimit />
-      </Provider>
-    );
+  it('renders correctly and changes pageSize', async () => {
+    mockRouter.push('/?pageSize=0&pageNumber=0');
+
+    render(<PageSize />, { wrapper: MemoryRouterProvider });
+
     expect(screen.getByTestId('page-size')).toBeInTheDocument();
 
     const pageSize10 = screen.getByTestId('page-size-10');
@@ -23,12 +24,12 @@ describe('SearchLimit component', () => {
     expect(pageSize50).toBeInTheDocument();
 
     fireEvent.click(pageSize10);
-    expect(store.getState().search.pageSize).toBe(10);
+    expect(mockRouter.asPath).toBe('/?pageSize=10&pageNumber=0');
 
     fireEvent.click(pageSize20);
-    expect(store.getState().search.pageSize).toBe(20);
+    expect(mockRouter.asPath).toBe('/?pageSize=20&pageNumber=0');
 
     fireEvent.click(pageSize50);
-    expect(store.getState().search.pageSize).toBe(50);
+    expect(mockRouter.asPath).toBe('/?pageSize=50&pageNumber=0');
   });
 });
