@@ -13,7 +13,7 @@ const CardList: FC<AstronomicalObjectBaseResponse> = ({
   }
 
   return (
-    <div className={styles.wrapper} /* onClick={(e) => listClickHandle(e)} */>
+    <div className={styles.wrapper}>
       {page && page.numberOfElements > 0 && <Pagination {...page} />}
       <div className={styles.list}>
         {astronomicalObjects.length <= 0 ? (

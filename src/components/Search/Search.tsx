@@ -18,7 +18,7 @@ const Search: FC = () => {
       maxAge: 30 * 24 * 60 * 60,
       path: '/',
     });
-    router.push(`/search?pageSize=10&pageNumber=0`);
+    router.push(`/?pageSize=10&pageNumber=0`);
   };
 
   return (

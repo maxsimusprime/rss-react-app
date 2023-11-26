@@ -9,19 +9,19 @@ const SearchLimit: FC = () => {
     >
       <span>Page limit</span>
       <Link
-        href="/search?pageSize=10&pageNumber=0"
+        href="/?pageSize=10&pageNumber=0"
         data-testid={'page-size-10'}
       >
         <button>10</button>
       </Link>
       <Link
-        href="/search?pageSize=20&pageNumber=0"
+        href="/?pageSize=20&pageNumber=0"
         data-testid={'page-size-20'}
       >
         <button>20</button>
       </Link>
       <Link
-        href="/search?pageSize=50&pageNumber=0"
+        href="/?pageSize=50&pageNumber=0"
         data-testid={'page-size-50'}
       >
         <button>50</button>
