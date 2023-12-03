@@ -1,0 +1,35 @@
+.card,
+.card_new {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 10px;
+  width: 300px;
+  box-sizing: border-box;
+  padding: 30px;
+  border: 1px solid gray;
+  border-radius: 20px;
+}
+
+.card_new {
+  background-color: rgba(128, 128, 0, 0.111);
+}
+
+.card__image {
+  width: 100%;
+}
+
+.card__image img {
+  width: 100%;
+}
+
+.field {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.field__line {
+  flex: 1;
+  border-bottom: 2px dashed rgb(197, 197, 197);
+}

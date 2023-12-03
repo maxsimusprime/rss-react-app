@@ -1,0 +1,33 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 20px;
+}
+
+.form__field_vertical {
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+}
+
+.form__field_horizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 350px;
+}
+
+.form__input,
+.form__select,
+.form__option,
+.form__button {
+  padding: 0.5em;
+}
+
+.form__error {
+  margin: 0;
+  padding-left: 0.2em;
+  font-size: 14px;
+  color: rgb(255, 96, 96);
+}
