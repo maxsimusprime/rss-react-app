@@ -11,7 +11,7 @@ const CardList: FC<CardList> = ({ forms }) => {
   return (
     <div className={styles.list}>
       {forms.map((form) => (
-        <Card form={form} key={`${form.email}-${Date.now()}`} />
+        <Card form={form} key={`${Math.random()}`} />
       ))}
     </div>
   );
