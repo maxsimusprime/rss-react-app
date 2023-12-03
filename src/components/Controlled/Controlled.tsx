@@ -8,6 +8,7 @@ import { useAppDispatch } from '../../hooks/useAppDispatch';
 import type { FormData } from '../../dto/types';
 import { addFormSource } from '../../store/middlewares/converter';
 import { useNavigate } from 'react-router-dom';
+import { Countries } from '../../dto/types';
 
 const ControlledForm: FC = () => {
   const { countries } = useAppSelector((state) => state.form);
@@ -130,7 +131,7 @@ const ControlledForm: FC = () => {
               value={country.code}
               key={country.code}
             >
-              {country.name}
+              {Countries[country.code]}
             </option>
           ))}
         </select>

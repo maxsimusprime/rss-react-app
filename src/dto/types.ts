@@ -17,14 +17,21 @@ export interface FormDataState {
   email: string;
   password: string;
   passwordConfirm: string;
-  country: string;
+  country: CountryCode;
   gender: string;
   photo: string;
   accepted: string;
 }
 
 export interface FormState {
-  countries: { code: string; name: string }[];
+  countries: { code: CountryCode; name: string }[];
   forms: FormDataState[];
   isNewAdded: boolean;
+}
+
+export type CountryCode = 'CA' | 'US';
+
+export enum Countries {
+  CA = 'Canada',
+  US = 'USA',
 }

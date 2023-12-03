@@ -1,6 +1,7 @@
 import { FormDataState } from '../../dto/types';
 import { FC } from 'react';
 import styles from './Card.module.css';
+import { Countries } from '../../dto/types';
 
 interface CardProps {
   form: FormDataState;
@@ -36,7 +37,7 @@ const Card: FC<CardProps> = ({ form }) => {
       <div className={styles.field}>
         <span>Country:</span>
         <span className={styles.field__line}></span>
-        <span>{form.country}</span>
+        <span>{Countries[form.country]}</span>
       </div>
       <div className={styles.field}>
         <span>Gender:</span>
