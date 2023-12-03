@@ -6,7 +6,7 @@ export interface FormData {
   passwordConfirm: string;
   country: string;
   gender: string;
-  photo?: FileList;
+  photo?: FileList | undefined;
   accepted: string | undefined;
 }
 

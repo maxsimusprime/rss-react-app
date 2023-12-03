@@ -1,11 +1,11 @@
 import { FC } from 'react';
 import styles from '../Uncontrolled/Uncontrolled.module.css';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from '../../helpers/schema';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import type { FormData, FormDataSource } from '../../dto/types';
+import type { FormDataSource } from '../../dto/types';
 import { addFormSource } from '../../store/middlewares/converter';
 import { useNavigate } from 'react-router-dom';
 import { Countries } from '../../dto/types';
@@ -20,7 +20,7 @@ const ControlledForm: FC = () => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<FormData>({
+  } = useForm({
     defaultValues: {
       name: '',
       age: '',
@@ -36,8 +36,8 @@ const ControlledForm: FC = () => {
     mode: 'all',
   });
 
-  const onSubmit: SubmitHandler<FormData> = (data): void => {
-    const payload: FormDataSource = { ...data, ...{ type: 'controlled' } };
+  const onSubmit: SubmitHandler<FieldValues> = (data): void => {
+    const payload = { ...data, ...{ type: 'controlled' } } as FormDataSource;
     dispatch(addFormSource(payload));
     reset();
     navigate('/');
