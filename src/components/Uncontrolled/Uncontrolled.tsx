@@ -110,6 +110,7 @@ const UncontrolledForm: FC = () => {
           className={styles.form__input}
           name="password"
           id="password"
+          autoComplete="new-password"
           ref={password}
         />
       </div>
@@ -130,7 +131,7 @@ const UncontrolledForm: FC = () => {
         <input
           list="countries"
           id="country"
-          name='country'
+          name="country"
           ref={country}
           className={styles.form__input}
         />

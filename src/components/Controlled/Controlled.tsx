@@ -96,6 +96,7 @@ const ControlledForm: FC = () => {
           id="password"
           className={styles.form__input}
           {...register('password')}
+          autoComplete="new-password"
         />
         {errors.password && (
           <p className={styles.form__error}>{errors.password.message}</p>
