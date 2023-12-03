@@ -1,9 +1,9 @@
 import { Dispatch, Middleware, createAction } from '@reduxjs/toolkit';
 import { addForm } from '../slices.ts/formSlice';
-import { FormData, FormDataState } from '../../dto/types';
+import { FormDataSource, FormDataState } from '../../dto/types';
 import { fileToBase64 } from '../../helpers/fileToBase64';
 
-export const addFormSource = createAction<FormData>('addFormSource');
+export const addFormSource = createAction<FormDataSource>('addFormSource');
 
 export const converter: Middleware<Promise<Dispatch>> =
   (storeAPI) => (next) => (action) => {

@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from '../../helpers/schema';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import type { FormData } from '../../dto/types';
+import type { FormData, FormDataSource } from '../../dto/types';
 import { addFormSource } from '../../store/middlewares/converter';
 import { useNavigate } from 'react-router-dom';
 import { Countries } from '../../dto/types';
@@ -37,7 +37,7 @@ const ControlledForm: FC = () => {
   });
 
   const onSubmit: SubmitHandler<FormData> = (data): void => {
-    const payload = Object.assign({ ...data }, { type: 'controlled' });
+    const payload: FormDataSource = { ...data, ...{ type: 'controlled' } };
     dispatch(addFormSource(payload));
     reset();
     navigate('/');

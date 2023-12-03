@@ -1,4 +1,4 @@
-import type { FormDataState, FormState } from '@/dto/types';
+import type { FormDataState, FormState } from '../../dto/types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 const initialState: FormState = {

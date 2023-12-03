@@ -6,16 +6,17 @@ export const schema = yup.object().shape({
   name: yup
     .string()
     .required('Name is required')
-    .matches(/^[A-Z]{1}[a-zA-Z]*$/, 'First letter must be a Uppercased'),
+    .matches(/^[A-Z]{1}[a-zA-Z]*$/, 'Name first letter must be a Uppercased'),
 
   age: yup
     .string()
     .required('Age is required')
-    .matches(/^\d+$/, 'Only positive number'),
+    .matches(/^\d+$/, 'Age is only positive numbers'),
 
   email: yup
     .string()
     .required('Email is required')
+    .email('Invalid email format')
     .matches(
       /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,3}/,
       'Invalid email format'
@@ -25,7 +26,7 @@ export const schema = yup.object().shape({
 
   passwordConfirm: yup
     .string()
-    .oneOf([yup.ref('password')], 'Doesn`t match with password field')
+    .oneOf([yup.ref('password')], 'Confirm password doesn`t match with password field')
     .required('Password re-input is required'),
 
   country: yup.string().required('Country is required'),
@@ -34,7 +35,6 @@ export const schema = yup.object().shape({
 
   photo: yup
     .mixed()
-    .nullable()
     .test(
       'is-file-added',
       'Photo is required',

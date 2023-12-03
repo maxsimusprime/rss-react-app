@@ -10,6 +10,19 @@ export interface FormData {
   accepted: string | undefined;
 }
 
+export interface FormDataSource {
+  type: 'controlled' | 'uncontrolled';
+  name: string;
+  age: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+  country: string;
+  gender: string;
+  photo?: FileList;
+  accepted: string | undefined;
+}
+
 export interface FormDataState {
   type: 'controlled' | 'uncontrolled';
   name: string;
