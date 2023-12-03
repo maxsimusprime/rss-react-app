@@ -117,24 +117,21 @@ const ControlledForm: FC = () => {
 
       <div className={styles.form__field_vertical}>
         <label htmlFor="country">Country:</label>
-        <select
-          className={styles.form__select}
-          {...register('country')}
+        <input
+          list="countries"
           id="country"
-        >
-          <option className={styles.form__option} value="">
-            Select Country
-          </option>
+          className={styles.form__input}
+          {...register('country')}
+        />
+        <datalist id="countries">
           {countries.map((country) => (
             <option
               className={styles.form__option}
-              value={country.code}
+              value={Countries[country.code]}
               key={country.code}
-            >
-              {Countries[country.code]}
-            </option>
+            ></option>
           ))}
-        </select>
+        </datalist>
         {errors.country && (
           <p className={styles.form__error}>{errors.country.message}</p>
         )}

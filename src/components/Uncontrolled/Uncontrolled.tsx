@@ -19,7 +19,7 @@ const UncontrolledForm: FC = () => {
   const email = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
   const passwordConfirm = useRef<HTMLInputElement>(null);
-  const country = useRef<HTMLSelectElement>(null);
+  const country = useRef<HTMLInputElement>(null);
   const gender = useRef<HTMLInputElement>(null);
   const photo = useRef<HTMLInputElement>(null);
   const accepted = useRef<HTMLInputElement>(null);
@@ -127,25 +127,22 @@ const UncontrolledForm: FC = () => {
 
       <div className={styles.form__field_vertical}>
         <label htmlFor="country">Country:</label>
-        <select
-          className={styles.form__select}
-          name="country"
+        <input
+          list="countries"
           id="country"
+          name='country'
           ref={country}
-        >
-          <option className={styles.form__option} value="">
-            Select Country
-          </option>
+          className={styles.form__input}
+        />
+        <datalist id="countries">
           {countries.map((country) => (
             <option
-              key={country.code}
               className={styles.form__option}
-              value={country.code}
-            >
-              {Countries[country.code]}
-            </option>
+              value={Countries[country.code]}
+              key={country.code}
+            ></option>
           ))}
-        </select>
+        </datalist>
       </div>
 
       <div className={styles.form__field_vertical}>

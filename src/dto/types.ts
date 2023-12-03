@@ -42,9 +42,12 @@ export interface FormState {
   isNewAdded: boolean;
 }
 
-export type CountryCode = 'CA' | 'US';
+export type CountryCode = 'CA' | 'US' | 'BY' | 'PL' | 'NL';
 
 export enum Countries {
   CA = 'Canada',
   US = 'USA',
+  BY = 'Belarus',
+  PL = 'Poland',
+  NL = 'Netherlands',
 }

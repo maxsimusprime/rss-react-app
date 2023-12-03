@@ -5,6 +5,9 @@ const initialState: FormState = {
   countries: [
     { code: 'US', name: 'USA' },
     { code: 'CA', name: 'Canada' },
+    { code: 'BY', name: 'Belarus' },
+    { code: 'PL', name: 'Poland' },
+    { code: 'NL', name: 'Netherlands' },
   ],
   forms: [],
   isNewAdded: false,
