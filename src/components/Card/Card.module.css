@@ -1,4 +1,4 @@
-.card {
+.card, .card_new {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,6 +8,10 @@
   padding: 30px;
   border: 1px solid gray;
   border-radius: 20px;
+}
+
+.card_new {
+  background-color: rgba(128, 128, 0, 0.111);
 }
 
 .card__image {

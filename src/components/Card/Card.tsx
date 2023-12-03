@@ -5,11 +5,14 @@ import { Countries } from '../../dto/types';
 
 interface CardProps {
   form: FormDataState;
+  isNew: boolean;
 }
 
-const Card: FC<CardProps> = ({ form }) => {
+const Card: FC<CardProps> = ({ form, isNew }) => {
+  const cardClassName = isNew ? styles.card_new : styles.card;
+
   return (
-    <div className={styles.card}>
+    <div className={cardClassName}>
       <div className={styles.card__image}>
         <img src={form.photo} />
       </div>
