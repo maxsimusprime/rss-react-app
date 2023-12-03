@@ -22,11 +22,21 @@ export const schema = yup.object().shape({
       'Invalid email format'
     ),
 
-  password: yup.string().required('Password is required'),
+  password: yup
+    .string()
+    .required('Password is required')
+    .min(5, 'Password length should be at least 5 symbols')
+    .matches(/[0-9]/, 'Password should contain at least 1 number')
+    .matches(/[A-Z]/, 'Password should contain at least 1 uppercase letter')
+    .matches(/[a-z]/, 'Password should contain at least 1 lowercase letter')
+    .matches(/[!@#$%^&*]/, 'Password should contain at least 1 special symbol'),
 
   passwordConfirm: yup
     .string()
-    .oneOf([yup.ref('password')], 'Confirm password doesn`t match with password field')
+    .oneOf(
+      [yup.ref('password')],
+      'Confirm password doesn`t match with password field'
+    )
     .required('Password re-input is required'),
 
   country: yup.string().required('Country is required'),
@@ -54,5 +64,9 @@ export const schema = yup.object().shape({
 
   accepted: yup
     .string()
-    .test('is-confirmed', 'Needs to confirm', (value) => value === 'true'),
+    .test(
+      'is-confirmed',
+      'Needs to accept Terms & Conditions',
+      (value) => value === 'true'
+    ),
 });
